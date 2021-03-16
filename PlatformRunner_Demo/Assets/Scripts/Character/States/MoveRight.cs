@@ -18,12 +18,7 @@ public class MoveRight : State
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
-    }
 
-    public void Exit()
-    {
-        throw new System.NotImplementedException();
     }
 
     public void LogicUpdate()

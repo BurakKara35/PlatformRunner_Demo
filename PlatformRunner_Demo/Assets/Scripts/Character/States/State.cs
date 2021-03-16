@@ -9,6 +9,4 @@ interface State
     void LogicUpdate();
 
     void PhysicsUpdate();
-
-    void Exit();
 }

@@ -2,28 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stop : State
+public class Idle : State
 {
     private Rigidbody _rigidbody;
+    private Animator _animator;
 
-    public Stop(Rigidbody rigidbody)
+    public Idle(Rigidbody rigidbody, Animator animator)
     {
         this._rigidbody = rigidbody;
+        this._animator = animator;
     }
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        _animator.SetBool("run", false);
+        Debug.Log("Idle Enter");
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        _animator.ResetTrigger("idle");
     }
 
     public void LogicUpdate()
     {
-        Debug.Log("Stopped");
+        Debug.Log("Idle Update");
     }
 
     public void PhysicsUpdate()

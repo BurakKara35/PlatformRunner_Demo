@@ -5,27 +5,25 @@ using UnityEngine;
 public class Run : State
 {
     private Rigidbody _rigidbody;
+    private Animator _animator;
     private float _speed;
 
-    public Run(Rigidbody rigidbody, float speed)
+    public Run(Rigidbody rigidbody, Animator animator, float speed)
     {
         this._rigidbody = rigidbody;
+        this._animator = animator;
         this._speed = speed;
     }
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void Exit()
-    {
-        throw new System.NotImplementedException();
+        _animator.SetBool("run", true);
+        Debug.Log("Run Enter");
     }
 
     public void LogicUpdate()
     {
-        Debug.Log("Running");
+        Debug.Log("Run Update");
     }
 
     public void PhysicsUpdate()
