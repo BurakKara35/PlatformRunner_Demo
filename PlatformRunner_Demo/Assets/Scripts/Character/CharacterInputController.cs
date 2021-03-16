@@ -13,12 +13,14 @@ public class CharacterInputController : MonoBehaviour
     public float runSpeed;
     public float moveSideSpeed;
 
+    #region Input Variables
     private bool _swipe = false;
     private bool _swipeFinished = true;
     private float _swipeFirstPosition;
     private float _differenceBetweenSwipePositions;
     private float _swipingInSeconds = 0.1f;
     private IEnumerator _swipeCoroutine;
+    #endregion
 
     private enum CharacterMovingSideState { None, Left, Right }
     private CharacterMovingSideState _characterMovingSideState;
