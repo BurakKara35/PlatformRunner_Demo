@@ -7,9 +7,9 @@ public class ObstacleCollider : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Character"))
+        if (collision.gameObject.CompareTag("Character"))
         {
-            Debug.Log("touched");
+            collision.gameObject.GetComponent<Character>().InitializeGame();
         }
     }
 }

@@ -3,16 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class HorizontalObstacleController : MonoBehaviour
+public class HorizontalObstacleController : HorizontalMovingObstaclesBase
 {
-    private Rigidbody _rigidbody;
-
-    private float _boundryInX;
     private static float _positionY;
-    [SerializeField] private float _speed;
-
-    private enum ObstacleMovingSide { Left, Right }
-    private ObstacleMovingSide _obstacleMovingSide;
 
     private void Awake()
     {
@@ -26,7 +19,7 @@ public class HorizontalObstacleController : MonoBehaviour
 
     private void Update()
     {
-        HorizontalMovement();
+        CheckPosition(transform.position.x);
     }
 
     private void FixedUpdate()
@@ -35,35 +28,5 @@ public class HorizontalObstacleController : MonoBehaviour
             MoveLeft();
         else
             MoveRight();
-    }
-
-    private void HorizontalMovement()
-    {
-        if(transform.position.x > _boundryInX)
-        {
-            _obstacleMovingSide = ObstacleMovingSide.Left;
-        }
-        else if(transform.position.x < -_boundryInX)
-        {
-            _obstacleMovingSide = ObstacleMovingSide.Right;
-        }
-    }
-
-    private void MoveLeft()
-    {
-        Vector3 temp = new Vector3(-_boundryInX, 0, 0).normalized * Time.fixedDeltaTime * _speed;
-        _rigidbody.MovePosition(transform.position + temp);
-    }
-
-    private void MoveRight()
-    {
-        Vector3 temp = new Vector3(_boundryInX, 0, 0).normalized * Time.fixedDeltaTime * _speed;
-        _rigidbody.MovePosition(transform.position + temp);
-    }
-
-    private void ChooseDirectionFirst()
-    {
-        float random = Random.Range(0, System.Enum.GetNames(typeof(ObstacleMovingSide)).Length);
-        _obstacleMovingSide = (ObstacleMovingSide)random;
     }
 }

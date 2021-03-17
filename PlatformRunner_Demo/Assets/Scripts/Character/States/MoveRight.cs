@@ -9,16 +9,17 @@ public class MoveRight : State
     private float _speed;
     private float _runSpeed;
 
-    public MoveRight(Rigidbody rigidbody , float speed, float runSpeed)
+    public MoveRight(Rigidbody rigidbody, Transform transform, float speed, float runSpeed)
     {
         this._rigidbody = rigidbody;
+        this._transform = transform;
         this._speed = speed;
         this._runSpeed = runSpeed;
     }
 
     public void Enter()
     {
-
+        _transform.rotation = Quaternion.Euler(0, 45, 0);
     }
 
     public void LogicUpdate()

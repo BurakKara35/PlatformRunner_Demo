@@ -5,12 +5,14 @@ using UnityEngine;
 public class Run : State
 {
     private Rigidbody _rigidbody;
+    private Transform _transform;
     private Animator _animator;
     private float _speed;
 
-    public Run(Rigidbody rigidbody, Animator animator, float speed)
+    public Run(Rigidbody rigidbody, Transform transform, Animator animator, float speed)
     {
         this._rigidbody = rigidbody;
+        this._transform = transform;
         this._animator = animator;
         this._speed = speed;
     }
@@ -18,6 +20,7 @@ public class Run : State
     public void Enter()
     {
         _animator.SetBool("run", true);
+        _transform.rotation = Quaternion.Euler(0, 0, 0);
         Debug.Log("Run Enter");
     }
 
