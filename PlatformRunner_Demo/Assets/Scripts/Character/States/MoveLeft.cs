@@ -30,6 +30,6 @@ public class MoveLeft : State
         float moveSide = Time.fixedDeltaTime * _speed;
         float run = Time.fixedDeltaTime * _runSpeed;
 
-        _rigidbody.velocity = (new Vector3(-moveSide, 0, run));
+        _rigidbody.velocity = new Vector3(-moveSide, 0, run);
     }
 }
