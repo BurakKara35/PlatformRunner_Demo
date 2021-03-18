@@ -93,8 +93,7 @@ public class Character : MonoBehaviour
             else if (characterStates == CharacterStates.Right)
                 _newState = new MoveRight(rigidbody, transform, moveSideSpeed, runSpeed);
             else if (characterStates == CharacterStates.ForceApplied)
-                _newState = new ForceApplied(rigidbody, transform, animator, appliedForceByRotator, ObstaclePositionThatAppliedForce);
-                
+                _newState = new ForceApplied(rigidbody, transform, animator, appliedForceByRotator, ObstaclePositionThatAppliedForce);        
         }
     }
 

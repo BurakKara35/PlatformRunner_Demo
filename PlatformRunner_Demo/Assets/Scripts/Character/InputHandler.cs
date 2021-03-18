@@ -51,10 +51,18 @@ public class InputHandler : MonoBehaviour, Handler
         {
             _differenceBetweenSwipePositions = Input.mousePosition.x - _swipeFirstPosition;
 
-            if (_differenceBetweenSwipePositions < 0)
-                character.characterStates = Character.CharacterStates.Left;
-            else if (_differenceBetweenSwipePositions > 0)
-                character.characterStates = Character.CharacterStates.Right;
+            if (character.characterStates != Character.CharacterStates.ForceApplied) // REMAINDER !!! Find out a better way to check this.
+            {
+                if (_differenceBetweenSwipePositions < 0)
+                    character.characterStates = Character.CharacterStates.Left;
+                else if (_differenceBetweenSwipePositions > 0)
+                    character.characterStates = Character.CharacterStates.Right;
+            }
+            else
+            {
+                _swipe = false;
+                _swipeFinished = true;
+            }
 
             if (!_swipeFinished)
             {
