@@ -39,7 +39,7 @@ public class InputHandler : MonoBehaviour, Handler
         {
             _swipe = false;
             _swipeFinished = true;
-            character.characterMovingSideState = Character.CharacterMovingSideState.None;
+            character.characterStates = Character.CharacterStates.Run;
             StopCoroutine(_swipeCoroutine);
         }
     }
@@ -52,9 +52,9 @@ public class InputHandler : MonoBehaviour, Handler
             _differenceBetweenSwipePositions = Input.mousePosition.x - _swipeFirstPosition;
 
             if (_differenceBetweenSwipePositions < 0)
-                character.characterMovingSideState = Character.CharacterMovingSideState.Left;
+                character.characterStates = Character.CharacterStates.Left;
             else if (_differenceBetweenSwipePositions > 0)
-                character.characterMovingSideState = Character.CharacterMovingSideState.Right;
+                character.characterStates = Character.CharacterStates.Right;
 
             if (!_swipeFinished)
             {

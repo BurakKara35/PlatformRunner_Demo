@@ -18,13 +18,18 @@ public class Character : MonoBehaviour
     public float runSpeed;
     public float moveSideSpeed;
 
-    public enum CharacterMovingSideState { None, Left, Right }
-    [HideInInspector] public CharacterMovingSideState characterMovingSideState;
+    [Header("Rotator Obstacle's Force")]
+    public float appliedForceByRotator;
+
+    public enum CharacterStates { Run, Left, Right, ForceApplied }
+    [HideInInspector] public CharacterStates characterStates;
 
     private enum Event { Enter, Update }
     private Event _event;
 
-    private static Vector3 _startingPoint;
+    private Vector3 _startingPoint;
+
+    private Vector3 _obstaclePositionThatAppliedForce;
 
     private void Awake()
     {
@@ -47,6 +52,7 @@ public class Character : MonoBehaviour
     void TempStartGame()
     {
         game.gameState = GameManager.GameState.On;
+        characterStates = CharacterStates.Run;
     }
 
     private void Update()
@@ -59,8 +65,8 @@ public class Character : MonoBehaviour
             _currentState.Enter();
             _event = Event.Update;
         }
-        //else if (_event == Event.Update)
-            //_currentState.LogicUpdate();
+
+        Debug.Log(_currentState);
     }
 
     private void FixedUpdate()
@@ -77,14 +83,18 @@ public class Character : MonoBehaviour
         }
         else
         {
-            _handler.Handle();
+            if (characterStates != CharacterStates.ForceApplied)
+                _handler.Handle();
 
-            if (characterMovingSideState == CharacterMovingSideState.Left)
-                _newState = new MoveLeft(rigidbody, transform, moveSideSpeed, runSpeed);
-            else if (characterMovingSideState == CharacterMovingSideState.Right)
-                _newState = new MoveRight(rigidbody, transform, moveSideSpeed, runSpeed);
-            else
+            if (characterStates == CharacterStates.Run)
                 _newState = new Run(rigidbody, transform, animator, runSpeed);
+            else if (characterStates == CharacterStates.Left)
+                _newState = new MoveLeft(rigidbody, transform, moveSideSpeed, runSpeed);
+            else if (characterStates == CharacterStates.Right)
+                _newState = new MoveRight(rigidbody, transform, moveSideSpeed, runSpeed);
+            else if (characterStates == CharacterStates.ForceApplied)
+                _newState = new ForceApplied(rigidbody, transform, animator, appliedForceByRotator, ObstaclePositionThatAppliedForce);
+                
         }
     }
 
@@ -99,8 +109,19 @@ public class Character : MonoBehaviour
 
     public void InitializeGame()
     {
-        transform.position = _startingPoint;
         _currentState = new Idle(rigidbody, transform, animator);
         _event = Event.Enter;
+        transform.position = _startingPoint;
+    }
+
+    public Vector3 ObstaclePositionThatAppliedForce
+    {
+        get { return _obstaclePositionThatAppliedForce; }
+        set { _obstaclePositionThatAppliedForce = value; }
+    }
+
+    public void AppliedForceFinished()
+    {
+        characterStates = CharacterStates.Run;
     }
 }

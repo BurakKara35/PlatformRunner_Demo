@@ -22,11 +22,6 @@ public class MoveRight : State
         _transform.rotation = Quaternion.Euler(0, 45, 0);
     }
 
-    public void LogicUpdate()
-    {
-        Debug.Log("Moving Right");
-    }
-
     public void PhysicsUpdate()
     {
         float moveSide = Time.fixedDeltaTime * _speed;

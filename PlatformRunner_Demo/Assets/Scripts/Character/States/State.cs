@@ -6,7 +6,5 @@ interface State
 {
     void Enter();
 
-    void LogicUpdate();
-
     void PhysicsUpdate();
 }

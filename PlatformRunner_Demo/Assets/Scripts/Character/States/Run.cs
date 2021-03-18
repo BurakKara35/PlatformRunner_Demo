@@ -21,12 +21,6 @@ public class Run : State
     {
         _animator.SetBool("run", true);
         _transform.rotation = Quaternion.Euler(0, 0, 0);
-        Debug.Log("Run Enter");
-    }
-
-    public void LogicUpdate()
-    {
-        Debug.Log("Run Update");
     }
 
     public void PhysicsUpdate()

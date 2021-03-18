@@ -19,17 +19,6 @@ public class Idle : State
     {
         _animator.SetBool("run", false);
         _transform.rotation = Quaternion.Euler(0, 0, 0);
-        Debug.Log("Idle Enter");
-    }
-
-    public void Exit()
-    {
-        _animator.ResetTrigger("idle");
-    }
-
-    public void LogicUpdate()
-    {
-        Debug.Log("Idle Update");
     }
 
     public void PhysicsUpdate()
