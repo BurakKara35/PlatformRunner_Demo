@@ -15,11 +15,11 @@ public class InputHandler : MonoBehaviour, Handler
     private IEnumerator _swipeCoroutine;
     #endregion
 
-    Character character;
+    private Character _character;
 
     private void Awake()
     {
-        character = GetComponent<Character>();
+        _character = GetComponent<Character>();
     }
 
     public void Handle()
@@ -39,7 +39,7 @@ public class InputHandler : MonoBehaviour, Handler
         {
             _swipe = false;
             _swipeFinished = true;
-            character.characterStates = Character.CharacterStates.Run;
+            _character.characterStates = Character.CharacterStates.Run;
             StopCoroutine(_swipeCoroutine);
         }
     }
@@ -51,12 +51,12 @@ public class InputHandler : MonoBehaviour, Handler
         {
             _differenceBetweenSwipePositions = Input.mousePosition.x - _swipeFirstPosition;
 
-            if (character.characterStates != Character.CharacterStates.ForceApplied) // REMAINDER !!! Find out a better way to check this.
+            if (_character.characterStates != Character.CharacterStates.ForceApplied) // REMAINDER !!! Find out a better way to check this.
             {
                 if (_differenceBetweenSwipePositions < 0)
-                    character.characterStates = Character.CharacterStates.Left;
+                    _character.characterStates = Character.CharacterStates.Left;
                 else if (_differenceBetweenSwipePositions > 0)
-                    character.characterStates = Character.CharacterStates.Right;
+                    _character.characterStates = Character.CharacterStates.Right;
             }
             else
             {

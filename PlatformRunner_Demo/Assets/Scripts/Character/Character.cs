@@ -65,8 +65,6 @@ public class Character : MonoBehaviour
             _currentState.Enter();
             _event = Event.Update;
         }
-
-        Debug.Log(_currentState);
     }
 
     private void FixedUpdate()

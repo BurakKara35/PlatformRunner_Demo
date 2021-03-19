@@ -54,4 +54,12 @@ public class RotatingPlatformController : MonoBehaviour
             ApplyForceToCharacter(collision.gameObject.GetComponent<Rigidbody>());
         }
     }
+
+    public string MovingSide()
+    {
+        if (_platformMovingSide == PlatformMovingSide.Left)
+            return "left";
+        else
+            return "right";
+    }
 }

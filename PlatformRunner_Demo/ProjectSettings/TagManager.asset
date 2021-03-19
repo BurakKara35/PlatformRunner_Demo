@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameManager
   - Character
+  - Obstacle
+  - RotatingPlatform
   layers:
   - Default
   - TransparentFX

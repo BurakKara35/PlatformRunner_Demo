@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 510721331274555905}
   - component: {fileID: 510721331274555919}
   m_Layer: 0
-  m_Name: Character
+  m_Name: PlayerCharacter
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,7 +132,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510721331274555916}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -176,7 +176,8 @@ MonoBehaviour:
   game: {fileID: 0}
   runSpeed: 350
   moveSideSpeed: 175
-  characterMovingSideState: 0
+  appliedForceByRotator: 500
+  characterStates: 0
 --- !u!114 &510721331274555907
 MonoBehaviour:
   m_ObjectHideFlags: 0
