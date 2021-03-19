@@ -10,7 +10,8 @@ public class ForceApplied : State
     private float _speed;
     private Vector3 _obstaclePosition;
 
-    private bool _isForceApplied;
+    private float _frameCount;
+    private int _finalFrameCount;
 
     public ForceApplied(Rigidbody rigidbody, Transform transform, Animator animator, float speed, Vector3 obstaclePosition)
     {
@@ -23,18 +24,23 @@ public class ForceApplied : State
 
     public void Enter()
     {
-        _isForceApplied = false;
-        _animator.SetTrigger("force_applied");
+        _frameCount = 0;
+        _finalFrameCount = 10;
     }
 
     public void PhysicsUpdate()
     {
-        if (!_isForceApplied)
+        // I use that way because i can't use Invoke or Coroutine here
+        if (_frameCount < _finalFrameCount)
         {
-            _rigidbody.AddForce((_transform.position - _obstaclePosition).normalized * _speed, ForceMode.VelocityChange);
-            _isForceApplied = true;
+            _rigidbody.AddForce((_transform.position - _obstaclePosition).normalized * _speed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            _frameCount++;
         }
-        else
+        else if(_frameCount == _finalFrameCount)
+        {
+            _animator.SetTrigger("force_applied");
             _rigidbody.velocity = Vector3.zero;
+            _frameCount++;
+        }
     }
 }
