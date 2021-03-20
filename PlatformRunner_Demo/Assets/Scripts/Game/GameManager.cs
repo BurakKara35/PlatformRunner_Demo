@@ -19,4 +19,9 @@ public class GameManager : MonoBehaviour
     {
         _camera.FollowTarget();
     }
+
+    void DestroyAllComponents()
+    {
+
+    }
 }

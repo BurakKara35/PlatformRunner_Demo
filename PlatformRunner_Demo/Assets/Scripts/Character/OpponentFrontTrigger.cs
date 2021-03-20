@@ -6,7 +6,7 @@ public class OpponentFrontTrigger : MonoBehaviour
 {
     [HideInInspector] public GameObject obstacleOnTheWay;
     [HideInInspector] public string informationObstacle;
-    [HideInInspector] public string rotatingPlatformSide;
+    [HideInInspector] public GameObject rotatingPlatform;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,7 +21,7 @@ public class OpponentFrontTrigger : MonoBehaviour
         }
 
         if (other.gameObject.CompareTag("RotatingPlatform"))
-            rotatingPlatformSide = other.transform.parent.GetChild(0).GetComponent<RotatingPlatformController>().MovingSide();
+            rotatingPlatform = other.gameObject;
     }
 
     private void OnTriggerExit(Collider other)
@@ -31,5 +31,8 @@ public class OpponentFrontTrigger : MonoBehaviour
             obstacleOnTheWay = null;
             informationObstacle = "";
         }
+
+        if (other.gameObject == rotatingPlatform)
+            rotatingPlatform = null;
     }
 }
