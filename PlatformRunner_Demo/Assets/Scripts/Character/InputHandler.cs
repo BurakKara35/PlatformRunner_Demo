@@ -40,7 +40,9 @@ public class InputHandler : MonoBehaviour, Handler
             _swipe = false;
             _swipeFinished = true;
             _character.characterStates = Character.CharacterStates.Run;
-            StopCoroutine(_swipeCoroutine);
+            
+            if(_swipeCoroutine != null)
+                StopCoroutine(_swipeCoroutine);
         }
     }
 

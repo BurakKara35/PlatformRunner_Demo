@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private GameObject _wall;
     [SerializeField] private GameObject _opponentParent;
+    [SerializeField] private GameObject _normalPlatformParent;
+    [SerializeField] private GameObject _rotatingPlatformParent;
+    [SerializeField] private GameObject _obstacleParent;
 
     private float _finalZ;
 
@@ -34,8 +37,8 @@ public class GameManager : MonoBehaviour
         else if (gameState == GameState.ArrangePainter)
         {
             ArrangementForPainterState();
-            Invoke("Painter", 2.5f);
-            DestroyAllComponents();
+            Invoke("StarPainterState", 2.5f);
+            DestroyRunnerPlatform();
         }
         else if (gameState == GameState.Painter)
         {
@@ -48,13 +51,17 @@ public class GameManager : MonoBehaviour
         _camera.LookAtWall(_wall.transform.position.z);
     }
 
-    private void DestroyAllComponents()
+    private void DestroyRunnerPlatform()
     {
         _opponentParent.SetActive(false);
+        _obstacleParent.SetActive(false);
+        _rotatingPlatformParent.SetActive(false);
+        _normalPlatformParent.SetActive(false);
     }
 
-    private void Painter()
+    private void StarPainterState()
     {
+        _wall.SetActive(true);
         gameState = GameState.Painter;
     }
 }
