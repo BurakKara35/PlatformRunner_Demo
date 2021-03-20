@@ -5,22 +5,30 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private CameraController _camera;
+    private UIController _ui;
 
-    public enum GameState { On, Off}
-    public GameState gameState;
+    [HideInInspector] public enum GameState { On, Off}
+    [HideInInspector] public GameState gameState;
+
+    public Transform player;
+
+    private float _finalZ;
 
     private void Awake()
     {
         _camera = Camera.main.GetComponent<CameraController>();
+        _ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>();
+        _finalZ = GameObject.FindGameObjectWithTag("Final").gameObject.transform.position.z;
         gameState = GameState.Off;
     }
 
     private void FixedUpdate()
     {
         _camera.FollowTarget();
+        _ui.RoadPlayerGet(player.position.z / _finalZ);
     }
 
-    void DestroyAllComponents()
+    private void DestroyAllComponents()
     {
 
     }
