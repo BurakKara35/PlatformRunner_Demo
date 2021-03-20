@@ -51,7 +51,7 @@ public class Character : MonoBehaviour
 
     void TempStartGame()
     {
-        game.gameState = GameManager.GameState.On;
+        game.gameState = GameManager.GameState.Runner;
         characterStates = CharacterStates.Run;
     }
 
@@ -75,7 +75,7 @@ public class Character : MonoBehaviour
 
     private void StateMachine()
     {
-        if (game.gameState == GameManager.GameState.Off)
+        if (game.gameState == GameManager.GameState.Idle)
         {
             _newState = new Idle(rigidbody, transform, animator);
         }

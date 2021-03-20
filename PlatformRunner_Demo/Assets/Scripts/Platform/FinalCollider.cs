@@ -14,6 +14,11 @@ public class FinalCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Character"))
-            _game.gameState = GameManager.GameState.Off;
+        {
+            if (other.gameObject.name.Contains("Player"))
+                _game.gameState = GameManager.GameState.ArrangePainter;
+
+            other.gameObject.SetActive(false);
+        }
     }
 }

@@ -35,12 +35,12 @@ public class AIHandler : MonoBehaviour, Handler
 
     void HandleStaticObstacle()
     {
-        if (transform.position.x > 7)
+        if(_opponentFrontTrigger.obstacleOnTheWay.transform.position.x > 7)
             _aIStates = AIStates.Left;
-        else if (transform.position.x < -7)
+        else if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.x < 7)
             _aIStates = AIStates.Right;
         else
-            _aIStates = (AIStates) _luckySide;
+            _aIStates = (AIStates)_luckySide;
     }
 
     void HandleNonStaticObstacle()
