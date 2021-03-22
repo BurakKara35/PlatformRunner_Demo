@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         _camera = Camera.main.GetComponent<CameraController>();
         _ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>();
         _finalZ = GameObject.FindGameObjectWithTag("Final").gameObject.transform.position.z;
-        gameState = GameState.ArrangePainter;
+        gameState = GameState.Idle;
     }
 
     private void FixedUpdate()

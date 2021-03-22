@@ -3,18 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Character))]
-public class InputHandler : MonoBehaviour, Handler
+public class InputHandler : InputBase, Handler
 {
-
-    #region Input Variables
-    private bool _swipe = false;
-    private bool _swipeFinished = true;
-    private float _swipeFirstPosition;
-    private float _differenceBetweenSwipePositions;
-    private float _swipingInSeconds = 0.1f;
-    private IEnumerator _swipeCoroutine;
-    #endregion
-
     private Character _character;
 
     private void Awake()
@@ -26,50 +16,49 @@ public class InputHandler : MonoBehaviour, Handler
     {
         if (Input.GetMouseButtonDown(0))
         {
-            _swipe = true;
-            _swipeFirstPosition = Input.mousePosition.x;
-            _swipeCoroutine = Swiping();
-            StartCoroutine(_swipeCoroutine);
+            InputDown();
+            swipeFirstPosition = Input.mousePosition.x;
+            swipeCoroutine = Swiping();
+            StartCoroutine(swipeCoroutine);
         }
-        if (Input.GetMouseButton(0) && _swipe)
+        if (Input.GetMouseButton(0) && swipe)
         {
-            _swipeFinished = false;
+            InputContinues();
         }
         if (Input.GetMouseButtonUp(0))
         {
-            _swipe = false;
-            _swipeFinished = true;
+            InputUp();
             _character.characterStates = Character.CharacterStates.Run;
             
-            if(_swipeCoroutine != null)
-                StopCoroutine(_swipeCoroutine);
+            if(swipeCoroutine != null)
+                StopCoroutine(swipeCoroutine);
         }
     }
 
     private IEnumerator Swiping()
     {
-        yield return new WaitForSeconds(_swipingInSeconds);
-        if (_swipe)
+        yield return new WaitForSeconds(swipingInSeconds);
+        if (swipe)
         {
-            _differenceBetweenSwipePositions = Input.mousePosition.x - _swipeFirstPosition;
+            differenceBetweenSwipePositions = Input.mousePosition.x - swipeFirstPosition;
 
             if (_character.characterStates != Character.CharacterStates.ForceApplied) // REMAINDER !!! Find out a better way to check this.
             {
-                if (_differenceBetweenSwipePositions < 0)
+                if (differenceBetweenSwipePositions < 0)
                     _character.characterStates = Character.CharacterStates.Left;
-                else if (_differenceBetweenSwipePositions > 0)
+                else if (differenceBetweenSwipePositions > 0)
                     _character.characterStates = Character.CharacterStates.Right;
             }
             else
             {
-                _swipe = false;
-                _swipeFinished = true;
+                swipe = false;
+                swipeFinished = true;
             }
 
-            if (!_swipeFinished)
+            if (!swipeFinished)
             {
-                _swipeCoroutine = Swiping();
-                StartCoroutine(_swipeCoroutine);
+                swipeCoroutine = Swiping();
+                StartCoroutine(swipeCoroutine);
             }
         }
     }

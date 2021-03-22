@@ -11,8 +11,8 @@ public class HalfDonutStickController : HorizontalMovingObstaclesBase
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _boundryInX = 0.145f;
+        rigidbody = GetComponent<Rigidbody>();
+        boundryInX = 0.145f;
 
         CheckObstacleFacingSide();
         ChooseDirectionFirst();
