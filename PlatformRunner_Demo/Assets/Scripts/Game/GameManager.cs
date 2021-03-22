@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GameState gameState;
 
     [SerializeField] private Transform _player;
-    [SerializeField] private GameObject _wall;
+    [SerializeField] private GameObject _paintingScene;
     [SerializeField] private GameObject _opponentParent;
     [SerializeField] private GameObject _normalPlatformParent;
     [SerializeField] private GameObject _rotatingPlatformParent;
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         _camera = Camera.main.GetComponent<CameraController>();
         _ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>();
         _finalZ = GameObject.FindGameObjectWithTag("Final").gameObject.transform.position.z;
-        gameState = GameState.Idle;
+        gameState = GameState.ArrangePainter;
     }
 
     private void FixedUpdate()
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void ArrangementForPainterState()
     {
-        _camera.LookAtWall(_wall.transform.position.z);
+        _camera.LookAtWall(_paintingScene.transform.position.z);
     }
 
     private void DestroyRunnerPlatform()
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     private void StarPainterState()
     {
-        _wall.SetActive(true);
+        _paintingScene.SetActive(true);
         gameState = GameState.Painter;
     }
 }

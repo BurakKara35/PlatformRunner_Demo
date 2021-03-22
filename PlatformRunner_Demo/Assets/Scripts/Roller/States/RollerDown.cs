@@ -8,11 +8,14 @@ public class RollerDown : State
     private Transform _transform;
     private Quaternion _rotation;
 
-    public RollerDown(Rigidbody rigidbody, Transform transform, Quaternion rotation)
+    private float _speed;
+
+    public RollerDown(Rigidbody rigidbody, Transform transform, Quaternion rotation, float speed)
     {
         this._rigidbody = rigidbody;
         this._transform = transform;
         this._rotation = rotation;
+        this._speed = speed;
     }
 
     public void Enter()
@@ -22,6 +25,9 @@ public class RollerDown : State
 
     public void PhysicsUpdate()
     {
-        _rigidbody.velocity = Vector3.down;
+        _transform.rotation = _rotation;
+
+        Vector3 down = -_transform.up;
+        _rigidbody.velocity = down *_speed;
     }
 }

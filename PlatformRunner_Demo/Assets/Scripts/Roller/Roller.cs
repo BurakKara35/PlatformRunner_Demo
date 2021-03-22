@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public class RollerController : MonoBehaviour
+public class Roller : MonoBehaviour
 {
     private Rigidbody _rigidbody; 
 
@@ -13,9 +13,11 @@ public class RollerController : MonoBehaviour
     private float _yBoundryMax;
     private float _zConstant;
 
+    [SerializeField] private float _rollerSpeed;
+
     private State _currentState;
     private State _newState;
-    private Handler _handler;
+    private RollerHandler _handler;
 
     public enum RollerStates { Wait, Up, Down }
     [HideInInspector] public RollerStates rollerState;
@@ -32,7 +34,10 @@ public class RollerController : MonoBehaviour
         _yBoundryMax = 7.5f;
         _zConstant = 225.7f;
 
-        _handler = GetComponent<Handler>();
+        _handler = GetComponent<RollerHandler>();
+
+        rollerState = RollerStates.Wait;
+        _currentState = new RollerWait(_rigidbody);
     }
 
     private void Update()
@@ -62,9 +67,9 @@ public class RollerController : MonoBehaviour
         if (rollerState == RollerStates.Wait)
             _newState = new RollerWait(_rigidbody);
         else if (rollerState == RollerStates.Up)
-            _newState = new RollerUp(_rigidbody, transform, transform.rotation);
+            _newState = new RollerUp(_rigidbody, transform, UpAngle(), _rollerSpeed);
         else if (rollerState == RollerStates.Down)
-            _newState = new RollerDown(_rigidbody, transform, transform.rotation);
+            _newState = new RollerDown(_rigidbody, transform, DownAngle(), _rollerSpeed);
     }
 
     private void ControlIfStateChanged()
@@ -81,5 +86,18 @@ public class RollerController : MonoBehaviour
         float xPosition = Mathf.Clamp(transform.position.x, -_xBoundry, _xBoundry);
         float yPosition = Mathf.Clamp(transform.position.y, _yBoundryMin, _yBoundryMax);
         transform.position = new Vector3(xPosition, yPosition, _zConstant);
+    }
+
+    public Quaternion UpAngle()
+    {
+        return Quaternion.Euler(new Vector3(0, 0, _handler.Angle()));
+    }
+
+    public Quaternion DownAngle()
+    {
+        if(_handler.Angle() > 90 || _handler.Angle() < -90)
+            return Quaternion.Euler(new Vector3(0, 0, _handler.Angle() + 180));
+        else
+            return Quaternion.Euler(new Vector3(0, 0, _handler.Angle()));
     }
 }
