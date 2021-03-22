@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private CameraController _camera;
     private UIController _ui;
+    private WallForegroundProcesses _wallForegroundProcesses;
 
     [HideInInspector] public enum GameState { Idle, Runner, ArrangePainter, Painter}
     [HideInInspector] public GameState gameState;
@@ -37,12 +38,12 @@ public class GameManager : MonoBehaviour
         else if (gameState == GameState.ArrangePainter)
         {
             ArrangementForPainterState();
-            Invoke("StarPainterState", 2.5f);
+            Invoke("StartPainterState", 2.5f);
             DestroyRunnerPlatform();
         }
         else if (gameState == GameState.Painter)
         {
-            Debug.Log("painter");
+            _ui.RoadPlayerGet((float)_wallForegroundProcesses.touchedCountOfForeObject / (float)_wallForegroundProcesses.countOfForeObject);
         }
     }
 
@@ -59,9 +60,10 @@ public class GameManager : MonoBehaviour
         _normalPlatformParent.SetActive(false);
     }
 
-    private void StarPainterState()
+    private void StartPainterState()
     {
         _paintingScene.SetActive(true);
+        _wallForegroundProcesses = GameObject.FindGameObjectWithTag("WallForegroundParent").GetComponent<WallForegroundProcesses>();
         gameState = GameState.Painter;
     }
 }
