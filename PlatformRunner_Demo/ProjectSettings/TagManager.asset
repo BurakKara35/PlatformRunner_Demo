@@ -12,6 +12,7 @@ TagManager:
   - Final
   - WallForeground
   - WallForegroundParent
+  - Roller
   layers:
   - Default
   - TransparentFX

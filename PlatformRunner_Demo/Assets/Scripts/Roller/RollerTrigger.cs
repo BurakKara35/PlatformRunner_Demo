@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class RollerTrigger : MonoBehaviour
 {
-    WallForegroundProcesses foregroundProcesses;
+    private WallForegroundProcesses _foregroundProcesses;
+    private Roller _roller;
 
     private void Awake()
     {
-        foregroundProcesses = GameObject.FindGameObjectWithTag("WallForegroundParent").GetComponent<WallForegroundProcesses>();
+        _foregroundProcesses = GameObject.FindGameObjectWithTag("WallForegroundParent").GetComponent<WallForegroundProcesses>();
+        _roller = GameObject.FindGameObjectWithTag("Roller").GetComponent<Roller>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("WallForeground"))
         {
-            other.gameObject.SetActive(false);
-            foregroundProcesses.touchedCountOfForeObject++;
+            if(_roller.rollerState != Roller.RollerStates.Wait)
+            {
+                other.gameObject.SetActive(false);
+                _foregroundProcesses.touchedCountOfForeObject++;
+            }
         }
     }
 }

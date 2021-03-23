@@ -16,8 +16,8 @@ public class WallForegroundProcesses : MonoBehaviour
 
     private void Awake()
     {
-        _xPoint = -3.65f;
-        _yPoint = 1.35f;
+        _xPoint = -3.7f;
+        _yPoint = 1.3f;
         _zPoint = _wall.position.z -0.001f;
 
         countOfForeObject = 0;
@@ -34,9 +34,9 @@ public class WallForegroundProcesses : MonoBehaviour
 
     private void InitializeForegroundObjects()
     {
-        for (int i = 0; i < 36; i++)
+        for (int i = 0; i < 38; i++)
         {
-            for (int j = 0; j < 36; j++)
+            for (int j = 0; j < 38; j++)
             {
                 GameObject foreground = Instantiate(_foreground, new Vector3(_xPoint, _yPoint, _zPoint), Quaternion.identity);
                 foreground.transform.parent = transform;
@@ -45,7 +45,7 @@ public class WallForegroundProcesses : MonoBehaviour
                 countOfForeObject++;
             }
             _yPoint += 0.2f;
-            _xPoint = -3.6f;
+            _xPoint = -3.7f;
         }
     }
 }
