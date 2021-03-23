@@ -35,29 +35,59 @@ public class AIHandler : MonoBehaviour, Handler
 
     void HandleStaticObstacle()
     {
-        if(_opponentFrontTrigger.obstacleOnTheWay.transform.position.x > 7)
+        float _xOfObject = _opponentFrontTrigger.obstacleOnTheWay.transform.position.x;
+
+        if(_xOfObject > 6)
             _aIStates = AIStates.Left;
-        else if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.x < 7)
+        else if (_xOfObject < -6)
             _aIStates = AIStates.Right;
         else
-            _aIStates = (AIStates)_luckySide;
+        {
+            if (_xOfObject > transform.position.x)
+                _aIStates = AIStates.Left;
+            else if (_xOfObject < transform.position.x)
+                _aIStates = AIStates.Right;
+            else
+                _aIStates = (AIStates)_luckySide;
+        }
     }
 
     void HandleNonStaticObstacle()
     {
-        if (_opponentFrontTrigger.obstacleOnTheWay.name.Contains("Rotating"))
+        string _obstacleName = _opponentFrontTrigger.obstacleOnTheWay.name;
+
+        if (_obstacleName.Contains("Rotating"))
         {
-            if (transform.position.x < 7)
+            if (transform.position.x > 7)
                 _aIStates = AIStates.Right;
             else
                 _aIStates = AIStates.Run;
         }
-        else if (_opponentFrontTrigger.obstacleOnTheWay.name.Contains("Horizontal"))
+        else if (_obstacleName.Contains("Horizontal"))
         {
-            if (_opponentFrontTrigger.obstacleOnTheWay.GetComponent<HorizontalMovingObstaclesBase>()._obstacleMovingSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
-                _aIStates = AIStates.Right;
+            var _objectSide = _opponentFrontTrigger.obstacleOnTheWay.GetComponent<HorizontalMovingObstaclesBase>()._obstacleMovingSide;
+
+            if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.z - transform.position.z < 1)
+            {
+                if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
+                    _aIStates = AIStates.Left;
+                else
+                    _aIStates = AIStates.Right;
+            }
             else
+            {
+                if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
+                    _aIStates = AIStates.Right;
+                else
+                    _aIStates = AIStates.Left;
+            }
+        }
+        else if (_obstacleName.Contains("Stick"))
+        {
+            if (transform.position.x > 0)
                 _aIStates = AIStates.Left;
+            else
+                _aIStates = AIStates.Right;
         }
     }
 
