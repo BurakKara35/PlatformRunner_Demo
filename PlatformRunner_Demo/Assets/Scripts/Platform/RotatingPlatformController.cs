@@ -9,11 +9,11 @@ public class RotatingPlatformController : MonoBehaviour
 
     [SerializeField] private float _speed;
 
-    RotatingPlatformProperties rotatingPlatformProperties;
+    private RotatingPlatformProperties _rotatingPlatformProperties;
 
     private void Awake()
     {
-        rotatingPlatformProperties = transform.parent.parent.GetComponent<RotatingPlatformProperties>();
+        _rotatingPlatformProperties = transform.parent.parent.GetComponent<RotatingPlatformProperties>();
         ChooseDirection();
         SelectRandomMaterial();
     }
@@ -39,7 +39,7 @@ public class RotatingPlatformController : MonoBehaviour
 
     private void SelectRandomMaterial()
     {
-        this.GetComponent<MeshRenderer>().material = rotatingPlatformProperties.materials[Random.Range(0, rotatingPlatformProperties.materials.Length)];
+        this.GetComponent<MeshRenderer>().material = _rotatingPlatformProperties.materials[Random.Range(0, _rotatingPlatformProperties.materials.Length)];
     }
 
     private void ApplyForceToCharacter(Rigidbody rigidbody)

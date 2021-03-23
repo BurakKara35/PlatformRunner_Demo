@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Roller))]
 public class RollerHandler : InputBase, Handler
 {
     private Roller _roller;

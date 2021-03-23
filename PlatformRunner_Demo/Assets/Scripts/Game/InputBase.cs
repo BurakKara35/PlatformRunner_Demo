@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputBase : MonoBehaviour
+public abstract class InputBase : MonoBehaviour
 {
     #region Input Variables
     [HideInInspector] public bool swipe = false;

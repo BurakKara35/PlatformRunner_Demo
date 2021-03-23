@@ -12,8 +12,8 @@ public class Character : MonoBehaviour
     private Handler _handler;
 
     [HideInInspector] public Rigidbody rigidbody;
-    [HideInInspector] private Animator animator;
     [HideInInspector] public GameManager game;
+    private Animator _animator;
 
     public float runSpeed;
     public float moveSideSpeed;
@@ -34,7 +34,7 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         game = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         _handler = GetComponent<Handler>();
@@ -77,7 +77,7 @@ public class Character : MonoBehaviour
     {
         if (game.gameState == GameManager.GameState.Idle)
         {
-            _newState = new Idle(rigidbody, transform, animator);
+            _newState = new Idle(rigidbody, transform, _animator);
         }
         else
         {
@@ -85,13 +85,13 @@ public class Character : MonoBehaviour
                 _handler.Handle();
 
             if (characterStates == CharacterStates.Run)
-                _newState = new Run(rigidbody, transform, animator, runSpeed);
+                _newState = new Run(rigidbody, transform, _animator, runSpeed);
             else if (characterStates == CharacterStates.Left)
                 _newState = new MoveLeft(rigidbody, transform, moveSideSpeed, runSpeed);
             else if (characterStates == CharacterStates.Right)
                 _newState = new MoveRight(rigidbody, transform, moveSideSpeed, runSpeed);
             else if (characterStates == CharacterStates.ForceApplied)
-                _newState = new ForceApplied(rigidbody, transform, animator, appliedForceByRotator, ObstaclePositionThatAppliedForce);        
+                _newState = new ForceApplied(rigidbody, transform, _animator, appliedForceByRotator, ObstaclePositionThatAppliedForce);        
         }
     }
 
@@ -106,7 +106,7 @@ public class Character : MonoBehaviour
 
     public void InitializeGame()
     {
-        _currentState = new Idle(rigidbody, transform, animator);
+        _currentState = new Idle(rigidbody, transform, _animator);
         _event = Event.Enter;
         transform.position = _startingPoint;
     }
