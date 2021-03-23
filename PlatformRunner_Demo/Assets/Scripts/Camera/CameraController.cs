@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
 
     public void LookAtWall(float wallZ)
     {
-        _cameraToWallPosition = new Vector3(0, 5, wallZ - 10);
+        _cameraToWallPosition = new Vector3(0, 5, wallZ - 15);
 
         transform.position = Vector3.MoveTowards(transform.position, _cameraToWallPosition, 0.2f);
         transform.rotation = Quaternion.Lerp(transform.rotation, _cameraToWallRotation, 0.2f);
