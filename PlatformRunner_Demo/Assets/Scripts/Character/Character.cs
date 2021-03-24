@@ -45,14 +45,6 @@ public class Character : MonoBehaviour
     private void Start()
     {
         InitializeGame();
-
-        Invoke("TempStartGame", 3f);
-    }
-
-    void TempStartGame()
-    {
-        game.gameState = GameManager.GameState.Runner;
-        characterStates = CharacterStates.Run;
     }
 
     private void Update()

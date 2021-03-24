@@ -58,40 +58,19 @@ public class AIHandler : MonoBehaviour, Handler
 
         if (_obstacleName.Contains("Rotating"))
         {
-            if (transform.position.x > 7)
-                _aIStates = AIStates.Right;
-            else
-                _aIStates = AIStates.Run;
+            HandleRotator();
         }
         else if (_obstacleName.Contains("Horizontal"))
         {
-            var _objectSide = _opponentFrontTrigger.obstacleOnTheWay.GetComponent<HorizontalMovingObstaclesBase>()._obstacleMovingSide;
-
-            if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.z - transform.position.z < 1)
-            {
-                if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
-                    _aIStates = AIStates.Left;
-                else
-                    _aIStates = AIStates.Right;
-            }
-            else
-            {
-                if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
-                    _aIStates = AIStates.Right;
-                else
-                    _aIStates = AIStates.Left;
-            }
+            HandleHorizontalObstacle();
         }
         else if (_obstacleName.Contains("Stick"))
         {
-            if (transform.position.x > 0)
-                _aIStates = AIStates.Left;
-            else
-                _aIStates = AIStates.Right;
+            HandleHalfDonut();
         }
     }
 
-    void HandlePlatform()
+    private void HandlePlatform()
     {
         if (_opponentFrontTrigger.rotatingPlatform != null)
         {
@@ -104,7 +83,49 @@ public class AIHandler : MonoBehaviour, Handler
         }
         else
             _aIStates = AIStates.Run;
+    }
 
+    private void HandleHalfDonut()
+    {
+        if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.x > 0)
+            _aIStates = AIStates.Left;
+        else
+            _aIStates = AIStates.Right;
+    }
+
+    private void HandleHorizontalObstacle()
+    {
+        var _objectSide = _opponentFrontTrigger.obstacleOnTheWay.GetComponent<HorizontalMovingObstaclesBase>()._obstacleMovingSide;
+
+        if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.z - transform.position.z < 1)
+        {
+            if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
+                _aIStates = AIStates.Left;
+            else
+                _aIStates = AIStates.Right;
+        }
+        else
+        {
+            if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
+                _aIStates = AIStates.Right;
+            else
+                _aIStates = AIStates.Left;
+        }
+    }
+
+    private void HandleRotator()
+    {
+        float _transformX = transform.position.x;
+
+        if (_transformX > 8 || _transformX < -8)
+            _aIStates = AIStates.Run;
+        else
+        {
+            if (_transformX > 0)
+                _aIStates = AIStates.Right;
+            else
+                _aIStates = AIStates.Left;
+        }
     }
 
     void Process(AIStates state)
