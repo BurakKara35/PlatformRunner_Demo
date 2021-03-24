@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
     public GameObject target;
     private float _offset;
     private float _lerpingTime = 0.2f;
+    private float _cameraDistanceFromWall = 15;
+    private float _yCameraInPainterSection = 5;
 
     private Vector3 _cameraToWallPosition;
     private Quaternion _cameraToWallRotation;
@@ -30,9 +32,9 @@ public class CameraController : MonoBehaviour
 
     public void LookAtWall(float wallZ)
     {
-        _cameraToWallPosition = new Vector3(0, 5, wallZ - 15);
+        _cameraToWallPosition = new Vector3(0, _yCameraInPainterSection, wallZ - _cameraDistanceFromWall);
 
-        transform.position = Vector3.MoveTowards(transform.position, _cameraToWallPosition, 0.2f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, _cameraToWallRotation, 0.2f);
+        transform.position = Vector3.MoveTowards(transform.position, _cameraToWallPosition, _lerpingTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, _cameraToWallRotation, _lerpingTime);
     }
 }

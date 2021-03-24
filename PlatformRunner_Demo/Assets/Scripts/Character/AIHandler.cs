@@ -14,8 +14,22 @@ public class AIHandler : MonoBehaviour, Handler
 
     private float _luckySide;
 
+    #region AI Variables
+    private float _xBoundryForStaticHandle;
+    private float _xBoundryForRotatingPlatform;
+    private float _xBoundryForRotator;
+    private float _xClosureToHorizontalObstacleForManeuver = 1;
+    #endregion
+
     private void Awake()
     {
+        float _xBoundry = GameManager._xBoundry;
+
+        _xBoundryForStaticHandle = _xBoundry - 4;
+        _xBoundryForRotatingPlatform = _xBoundry - 8;
+        _xBoundryForRotator = _xBoundry - 2;
+        _xClosureToHorizontalObstacleForManeuver = 1;
+
         _opponentFrontTrigger = _frontTrigger.GetComponent<OpponentFrontTrigger>();
         _character = GetComponent<Character>();
         _luckySide = Random.Range(0, 2); // To use this, left and right should be the first two elements of enum.
@@ -37,9 +51,9 @@ public class AIHandler : MonoBehaviour, Handler
     {
         float _xOfObject = _opponentFrontTrigger.obstacleOnTheWay.transform.position.x;
 
-        if(_xOfObject > 6)
+        if(_xOfObject > _xBoundryForStaticHandle)
             _aIStates = AIStates.Left;
-        else if (_xOfObject < -6)
+        else if (_xOfObject < -_xBoundryForStaticHandle)
             _aIStates = AIStates.Right;
         else
         {
@@ -74,9 +88,9 @@ public class AIHandler : MonoBehaviour, Handler
     {
         if (_opponentFrontTrigger.rotatingPlatform != null)
         {
-            if (transform.position.x > 2)
+            if (transform.position.x > _xBoundryForRotatingPlatform)
                 _aIStates = AIStates.Left;
-            else if (transform.position.x < -2)
+            else if (transform.position.x < -_xBoundryForRotatingPlatform)
                 _aIStates = AIStates.Right;
             else
                 _aIStates = AIStates.Run;
@@ -87,17 +101,37 @@ public class AIHandler : MonoBehaviour, Handler
 
     private void HandleHalfDonut()
     {
-        if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.x > 0)
-            _aIStates = AIStates.Left;
+        var _objectSide = _opponentFrontTrigger.obstacleOnTheWay.GetComponent<HalfDonutStickController>()._obstacleMovingSide;
+
+        if (transform.position.x > 0)
+        {
+            if(_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Right)
+            {
+                _aIStates = AIStates.Left;
+            }
+            else
+            {
+                _aIStates = AIStates.Run;
+            }
+        }
         else
-            _aIStates = AIStates.Right;
+        {
+            if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Right)
+            {
+                _aIStates = AIStates.Right;
+            }
+            else
+            {
+                _aIStates = AIStates.Run;
+            }
+        }
     }
 
     private void HandleHorizontalObstacle()
     {
         var _objectSide = _opponentFrontTrigger.obstacleOnTheWay.GetComponent<HorizontalMovingObstaclesBase>()._obstacleMovingSide;
 
-        if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.z - transform.position.z < 1)
+        if (_opponentFrontTrigger.obstacleOnTheWay.transform.position.z - transform.position.z < _xClosureToHorizontalObstacleForManeuver)
         {
             if (_objectSide == HorizontalMovingObstaclesBase.ObstacleMovingSide.Left)
                 _aIStates = AIStates.Left;
@@ -117,7 +151,7 @@ public class AIHandler : MonoBehaviour, Handler
     {
         float _transformX = transform.position.x;
 
-        if (_transformX > 8 || _transformX < -8)
+        if (_transformX > _xBoundryForRotator || _transformX < -_xBoundryForRotator)
             _aIStates = AIStates.Run;
         else
         {

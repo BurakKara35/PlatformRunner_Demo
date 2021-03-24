@@ -13,8 +13,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button _finishButton;
     [SerializeField] private Button _restartButton;
 
-    private string[] _goodFeedbacks = { "Great", "Perfect" };
-    private string[] _badFeedbacks = { "Not Bad", "Try Again" };
+    private string[] _goodFeedbacks = { "GREAT", "PERFECT" };
+    private string[] _badFeedbacks = { "NOT BAD", "TRY AGAIN" };
 
     public void RoadPlayerGet(float filledValue)
     {

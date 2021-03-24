@@ -20,6 +20,7 @@ public class Run : State
     public void Enter()
     {
         _animator.SetBool("run", true);
+        _animator.ResetTrigger("force_applied"); // If the rotator throw character out of platform, it starts from begining in this state but playing getting up animation, this line fixes this bug
         _transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 

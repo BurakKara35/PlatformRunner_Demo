@@ -10,7 +10,7 @@ public class HorizontalObstacleController : HorizontalMovingObstaclesBase
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
-        boundryInX = 10;
+        boundryInX = GameManager._xBoundry;
         _positionY = transform.position.y;
         transform.position = new Vector3(0, _positionY, transform.position.z);
 

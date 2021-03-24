@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _obstacleParent;
 
     private float _finalZ;
+    private float _arrangePainterTimeInSeconds = 2.5f;
+    private float _scoreForGoodFeedback = 0.85f;
+
+    [HideInInspector] public static float _xBoundry = 10; // (platform.scale.x * 0.8 ) / 2
 
     private void Awake()
     {
@@ -44,7 +48,7 @@ public class GameManager : MonoBehaviour
         else if (gameState == GameState.ArrangePainter)
         {
             ArrangementForPainterState();
-            Invoke("StartPainterState", 2.5f);
+            Invoke("StartPainterState", _arrangePainterTimeInSeconds);
             DestroyRunnerPlatform();
         }
         else if (gameState == GameState.Painter)
@@ -90,7 +94,9 @@ public class GameManager : MonoBehaviour
     public void GiveFeedback()
     {
         _ui.CloseFinishButton();
-        if ((float)_wallForegroundProcesses.touchedCountOfForeObject / (float)_wallForegroundProcesses.countOfForeObject > 0.85f)
+        _ui.CloseLevelUI();
+
+        if ((float)_wallForegroundProcesses.touchedCountOfForeObject / (float)_wallForegroundProcesses.countOfForeObject > _scoreForGoodFeedback)
             _ui.OpenGoodFinishFeedback();
         else
             _ui.OpenBadFinishFeedback();
