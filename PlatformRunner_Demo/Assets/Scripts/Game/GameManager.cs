@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _rotatingPlatformParent;
     [SerializeField] private GameObject _obstacleParent;
 
+    [SerializeField] private Renderer _sea;
+
     private float _finalZ;
     private float _arrangePainterTimeInSeconds = 2.5f;
     private float _scoreForGoodFeedback = 0.85f;
@@ -42,12 +44,10 @@ public class GameManager : MonoBehaviour
         }
         else if (gameState == GameState.Runner)
         {
-            _camera.FollowTarget();
             _ui.RoadPlayerGet(_player.position.z / _finalZ);
         }
         else if (gameState == GameState.ArrangePainter)
-        {
-            ArrangementForPainterState();
+        { 
             Invoke("StartPainterState", _arrangePainterTimeInSeconds);
             DestroyRunnerPlatform();
         }
@@ -55,6 +55,16 @@ public class GameManager : MonoBehaviour
         {
             _ui.RoadPlayerGet((float)_wallForegroundProcesses.touchedCountOfForeObject / (float)_wallForegroundProcesses.countOfForeObject);
         }
+
+        SeaWaves();
+    }
+
+    private void FixedUpdate()
+    {
+        if (gameState == GameState.Runner)
+            _camera.FollowTarget();
+        else if(gameState == GameState.ArrangePainter)
+            ArrangementForPainterState();
     }
 
     private void ArrangementForPainterState()
@@ -109,5 +119,12 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void SeaWaves()
+    {
+        float scaleX = Mathf.Cos(Time.time) * 0.1f + 1;
+        float scaleY = Mathf.Sin(Time.time) * 0.1f + 1;
+        _sea.material.mainTextureScale = new Vector2(scaleX, scaleY);
     }
 }

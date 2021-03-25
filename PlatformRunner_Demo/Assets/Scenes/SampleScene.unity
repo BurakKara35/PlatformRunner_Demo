@@ -333,6 +333,7 @@ MonoBehaviour:
   _normalPlatformParent: {fileID: 1518055399}
   _rotatingPlatformParent: {fileID: 466636183}
   _obstacleParent: {fileID: 246305246}
+  _sea: {fileID: 761387579}
 --- !u!1001 &84787989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1747,6 +1748,12 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: 30}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!23 &761387579 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1632328610625166938, guid: 9cb05034232c32c45931184e79f2ebd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1632328611814420132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &778393681
 PrefabInstance:
   m_ObjectHideFlags: 0
