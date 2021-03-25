@@ -14,7 +14,8 @@ public class OpponentFrontTrigger : MonoBehaviour
         {
             obstacleOnTheWay = other.gameObject;
 
-            if (obstacleOnTheWay.isStatic)
+            // if (obstacleOnTheWay.isStatic) this line works in editor but not works in build
+            if (obstacleOnTheWay.name.Contains("Static"))
                 informationObstacle = "static";
             else
                 informationObstacle = "nonstatic";
